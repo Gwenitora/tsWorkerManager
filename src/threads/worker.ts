@@ -6,7 +6,8 @@ import Utils from "../utils/util";
 import Types from "../utils/types";
 import ThreadSetup from "../threadSetup";
 
-class ThreadController<T extends ThreadSetup.AllWorks> {
+var currentThread: ThreadController<ThreadSetup.AllWorks>;
+export class ThreadController<T extends ThreadSetup.AllWorks = ThreadSetup.AllWorks> {
     private tasks: {
         [key: string]: (value: any) => any
     } = {};
@@ -16,7 +17,9 @@ class ThreadController<T extends ThreadSetup.AllWorks> {
     } = {};
 
     constructor() {
-        if (isMainThread) throw new Error('This class should only be instantiated in the not main threads')
+        if (isMainThread) throw new Error('This class should only be instantiated in the not main threads');
+        if (currentThread) throw new Error('This class should only be instantiated once');
+        currentThread = this;
 
         console.log = (...args: any[]) => {
             this.Post(ThreadT.msgType.MESSAGE, { data: args.map(arg => JSON.stringify(arg, null, 4)), strenght: ThreadT.MessageStrenght.INFO });
@@ -33,7 +36,7 @@ class ThreadController<T extends ThreadSetup.AllWorks> {
         this.Post(ThreadT.msgType.READY, undefined);
     }
 
-    private Post<T extends ThreadT.msgType>(type: T, msg: ThreadT.msgContent<T>): string {
+    private Post<U extends ThreadT.msgType>(type: U, msg: ThreadT.msgContent<U>): string {
         if (msg === undefined) msg = {} as any;
         (msg as any).type = type;
         if ((msg as any).fingerprint === undefined) (msg as any).fingerprint = ThreadU.newFingerprint();
@@ -81,4 +84,7 @@ class ThreadController<T extends ThreadSetup.AllWorks> {
     }
 }
 
+export const CurrentThread = <T extends ThreadSetup.AllWorks>() => {
+    return currentThread as ThreadController<T>;
+}
 export default ThreadController;

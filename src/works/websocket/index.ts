@@ -1,5 +1,6 @@
-import ThreadController from "../../threads/worker";
+import ThreadController, { CurrentThread } from "../../threads/worker";
 import ThreadSetup from "../../threadSetup";
 
-const thread = new ThreadController<ThreadSetup.AllWorks.Websocket>();
+new ThreadController();
+const thread = CurrentThread<ThreadSetup.AllWorks.Websocket>();
 export default thread;

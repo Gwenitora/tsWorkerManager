@@ -1,5 +1,6 @@
-import ThreadController from "../../threads/worker";
+import ThreadController, { CurrentThread } from "../../threads/worker";
 import ThreadSetup from "../../threadSetup";
 
-const thread = new ThreadController<ThreadSetup.AllWorks.API>();
+new ThreadController();
+const thread = CurrentThread<ThreadSetup.AllWorks.API>();
 export default thread;
