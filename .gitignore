@@ -1,0 +1,8 @@
+node_modules
+*.log
+[Ll][Oo][Gg][Ss]
+dist
+package-lock.json
+.vs
+.vscode
+.idea
