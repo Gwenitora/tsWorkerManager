@@ -1,8 +1,11 @@
+package-lock.json
 node_modules
+dist
+
 *.log
 [Ll][Oo][Gg][Ss]
-dist
-package-lock.json
+
 .vs
 .vscode
 .idea
+.env
