@@ -1,8 +1,7 @@
-import ThreadController, { CurrentThread } from "../../threads/worker";
-import ThreadSetup from "../../threadSetup";
+import ThreadController from "../../threads/worker";
 import dotenv from 'dotenv';
+import App from "./app";
 
 dotenv.config();
 new ThreadController();
-const thread = CurrentThread<ThreadSetup.AllWorks.API>();
-export default thread;
+App.Start();
